@@ -1,5 +1,6 @@
 package com.demo.tms.dto;
 
+import java.math.BigInteger;
 import java.util.Date;
 
 import org.springframework.stereotype.Component;
@@ -7,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class TaskDTO {
 
-	private Long taskId;
+	private BigInteger taskId;
 	private String id;
 	private String title;
 	private String description;
@@ -18,10 +19,10 @@ public class TaskDTO {
 	private Date dueDate;
 	private Date resolvedAt;
 
-	public Long getTaskId() {
+	public BigInteger getTaskId() {
 		return taskId;
 	}
-	public void setTaskId(Long taskId) {
+	public void setTaskId(BigInteger taskId) {
 		this.taskId = taskId;
 	}
 	

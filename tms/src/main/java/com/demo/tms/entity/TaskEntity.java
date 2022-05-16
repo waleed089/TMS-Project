@@ -1,5 +1,6 @@
 package com.demo.tms.entity;
 
+import java.math.BigInteger;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -14,7 +15,7 @@ import javax.persistence.Table;
 @Table(name = "task")
 public class TaskEntity {
 
-	private Long taskId;
+	private BigInteger taskId;
 	private String id;
 	private String title;
 	private String description;
@@ -29,10 +30,10 @@ public class TaskEntity {
 	@SequenceGenerator(name ="task_sequence", sequenceName = "task_sequence", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "task_sequence")
 	@Column(name="task_id")
-	public Long getTaskId() {
+	public BigInteger getTaskId() {
 		return taskId;
 	}
-	public void setTaskId(Long taskId) {
+	public void setTaskId(BigInteger taskId) {
 		this.taskId = taskId;
 	}
 	

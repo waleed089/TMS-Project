@@ -1,5 +1,6 @@
 package com.demo.tms.service;
 
+import java.math.BigInteger;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,12 +27,17 @@ public class TMSSeriveImpl implements TMSService {
 	}
 
 	@Override
-	public TaskEntity getById(Long taskId) {
+	public TaskEntity getById(BigInteger taskId) {
 		/*
 		 * Optional<TaskEntity> op = tmsRepository.findById(taskId); if(op.isPresent())
 		 * return tmsRepository.findById(taskId).get(); else return null;
 		 */
 		return tmsRepository.findById(taskId).orElse(null);
+	}
+
+	@Override
+	public List<Object[]> getAllTasksByOrder() {
+		return tmsRepository.getAllTaskByOrder();
 	}
 
 	

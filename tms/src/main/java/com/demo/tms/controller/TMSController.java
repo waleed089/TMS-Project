@@ -1,5 +1,6 @@
 package com.demo.tms.controller;
 
+import java.math.BigInteger;
 import java.util.List;
 import java.util.UUID;
 
@@ -47,6 +48,13 @@ public class TMSController {
 		return new ResponseEntity<>(response,(response.getCode()!=200 ? HttpStatus.OK : response.getStatusCode()));
 	}
 	
+	@GetMapping(path = "/getAllTask")
+	public ResponseEntity<ResponseDTO<List<TaskDTO>>> getAllTaskDataByOrder(){
+		ResponseDTO<List<TaskDTO>> response = tmsCustomResponse.getAllTaskDataByOrder();
+		
+		return new ResponseEntity<>(response,(response.getCode()!=200 ? HttpStatus.OK : response.getStatusCode()));
+	}
+	
 	@PostMapping(value ="/add", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> addTask(@RequestBody TaskDTO taskDTO){
 		UUID uuid = UUID.randomUUID();
@@ -67,7 +75,7 @@ public class TMSController {
 	}
 	
 	@GetMapping(value = "/getTask/{taskId}")
-	public ResponseEntity<ResponseDTO<TaskDTO>> getTaskById(@PathVariable("taskId") Long taskId){
+	public ResponseEntity<ResponseDTO<TaskDTO>> getTaskById(@PathVariable("taskId") BigInteger taskId){
 		ResponseDTO<TaskDTO> response = tmsCustomResponse.getTaskById(taskId);
 		return new ResponseEntity<>(response,(response.getCode()!=200 ? HttpStatus.OK : response.getStatusCode()));
 	}

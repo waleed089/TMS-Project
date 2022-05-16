@@ -1,6 +1,8 @@
 package com.demo.tms.response;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -52,6 +54,48 @@ public class TMSCustomResponse {
 		}
 	}
 	
+	public ResponseDTO<List<TaskDTO>> getAllTaskDataByOrder(){
+		ResponseDTO<List<TaskDTO>> response = new ResponseDTO<List<TaskDTO>>();
+		
+		List<Object[]> listObj = tmsService.getAllTasksByOrder();
+		
+		if(listObj.isEmpty()) {
+			response.setStatusCode(HttpStatus.NO_CONTENT);
+			response.setCode(HttpStatus.NO_CONTENT.value());
+			response.setMessage("No Data Found");
+			response.setData(new ArrayList<TaskDTO>());
+			return response;
+		}
+		else {
+			TaskDTO taskDTO = null;
+			List<TaskDTO> listTask = new ArrayList<TaskDTO>();
+			for (Object[] result : listObj) {
+				taskDTO = new TaskDTO();
+				
+				taskDTO.setTaskId( (BigInteger) result[0]);
+				taskDTO.setId( (String) result[1]);
+				taskDTO.setCreatedAt((Date) result[2]);
+				taskDTO.setDescription((String) result[3]);
+				taskDTO.setDueDate((Date) result[4]);
+				taskDTO.setPriority((String) result[5]);
+				taskDTO.setResolvedAt((Date) result[6]);
+				taskDTO.setStatus((Boolean) result[7]);
+				taskDTO.setTitle((String) result[8]);
+				taskDTO.setUpdatedAt((Date) result[9]);
+				
+				listTask.add(taskDTO);
+			}
+			response.setStatusCode(HttpStatus.OK);
+			response.setCode(HttpStatus.OK.value());
+			response.setMessage("Data Found");
+			response.setData(listTask);
+			return response;
+		}
+		
+	}
+	
+	
+	
 	public TaskDTO add(TaskDTO taskDTO) {
 		TaskEntity taskEntity = modelMapper.map(taskDTO, TaskEntity.class);
 		
@@ -65,7 +109,7 @@ public class TMSCustomResponse {
 		tmsService.addTask(taskEntity);
 	}
 	
-	public ResponseDTO<TaskDTO> getTaskById(Long taskId) {
+	public ResponseDTO<TaskDTO> getTaskById(BigInteger taskId) {
 		TaskEntity taskEntity = tmsService.getById(taskId);
 		ResponseDTO<TaskDTO> response = new ResponseDTO<TaskDTO>();
 		
